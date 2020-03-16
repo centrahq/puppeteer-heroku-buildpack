@@ -12,6 +12,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+FONTS_DIR=`cd "$LP_DIR/fonts"; pwd`
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 function error() {
@@ -103,3 +104,9 @@ find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty
 
 #remove chrome, we use the one in pupeeteer
 rm -rf $BUILD_DIR/.apt/opt/google
+
+topic "Installing fonts"
+mkdir -p $BUILD_DIR/.fonts
+ls $FONTS_DIR
+cp $FONTS_DIR/* $BUILD_DIR/.fonts/
+fc-cache -f $BUILD_DIR/.fonts
